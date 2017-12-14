@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd"
+       default-lazy-init="true">
+
+    <!-- domain -->
+
+    <bean id="eligibleCustomerFinder"
+          class="com.intercom.customers.domain.EligibleCustomerFinder"
+          autowire="constructor">
+    </bean>
+
+    <!-- domain.compute -->
+
+    <bean id="distanceCalculator"
+          class="com.intercom.customers.domain.compute.DistanceCalculator"
+          autowire="constructor">
+    </bean>
+
+    <!-- domain.entity -->
+
+    <bean id="officeLocation"
+          class="com.intercom.customers.domain.entity.Location">
+        <constructor-arg name="latitude" value="${app.dublinOffice.latitude}"/>
+        <constructor-arg name="longitude" value="${app.dublinOffice.longitude}"/>
+    </bean>
+
+    <!-- domain.formatter -->
+
+    <bean id="commandLineOutputFormatter"
+          class="com.intercom.customers.domain.formatter.CommandLineOutputFormatter"
+          autowire="constructor">
+    </bean>
+
+    <!-- domain.predicate -->
+
+    <bean id="eligibleCustomerDistancePredicate"
+          class="com.intercom.customers.domain.predicate.EligibleCustomerDistancePredicate"
+          autowire="constructor">
+        <constructor-arg name="eligibleDistanceInKm" value="${app.defaultEligibleCustomerDistance.km}"/>
+    </bean>
+
+
+    <!-- infrastructure -->
+
+    <!-- infrastructure.file -->
+
+    <bean id="fileDataSourceReader"
+          class="com.intercom.customers.infrastructure.file.FileDataSourceReader"
+          autowire="constructor">
+    </bean>
+
+    <bean id="fileDataSourceCustomerDataLoader"
+          class="com.intercom.customers.infrastructure.file.FileDataSourceCustomerDataLoader"
+          autowire="constructor">
+    </bean>
+
+    <!-- infrastructure.gson -->
+
+    <bean id="gsonCustomerDataDeserializer"
+          class="com.intercom.customers.infrastructure.gson.GsonCustomerDataDeserializer"
+          autowire="constructor">
+    </bean>
+
+</beans>
